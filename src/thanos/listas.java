@@ -1,14 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package thanos;
 
-/**
- *
- * @author Carlos
- */
+import java.util.LinkedList;
+
 public class listas {
+    LinkedList <String[]> tokens=new LinkedList<String[]>();
+    LinkedList <String[]> errores=new LinkedList<String[]>();
+    
+    public void a_token(){
+        
+    }
+    
+    public void a_error(){
+        
+    }
+    
+    public void reset_list(){
+        tokens.clear();
+        errores.clear();
+    }
     
 }
