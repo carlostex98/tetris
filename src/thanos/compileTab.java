@@ -22,14 +22,24 @@ public class compileTab {
                     } else if (Character.isDigit(c)) {
                         //declara mismo caso
                         caso = 5;
-                    } else if (Character.isLetter(c) || c == '_') {
-                        caso = 6;
+                    } else if (c == '*' || c == '#') {
+                        //nos mantenemos aqui
+                    } else if (c =='\n' ||c =='\n' || c =='\t') {
+                        //nos mantenemos aqui
+                    }else{
+                        //error ptm
                     }
                     break;
                 case 1:
-                    if(c=='\n'){
+                    if (c == '\n') {
                         //jump
-                        caso=0;
+                        caso = 0;
+                    }
+                    break;
+                    
+                case 2:
+                    if (c == '!' && v == '>') {
+                        caso = 0;
                     }
                     break;
             }
