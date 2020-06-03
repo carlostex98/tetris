@@ -8,6 +8,7 @@ public class compileTab {
         int caso = 0;
         for (int i = 0; i < data.length(); i++) {
             c = data.charAt(i);
+            String f="";
             if (i < data.length() - 1) {
                 c = data.charAt(i + 1);
             }
@@ -18,10 +19,14 @@ public class compileTab {
                     } else if (c == '<' && v == '!') {
                         caso = 2;
                     } else if (Character.isLetter(c) || c == '_') {
-                        caso = 4;
+                        caso = 3;
+                        //identificador
+                        f+=c;
                     } else if (Character.isDigit(c)) {
                         //declara mismo caso
-                        caso = 5;
+                        caso = 4;
+                        f+=c;
+                        //digito
                     } else if (c == '*' || c == '#') {
                         //nos mantenemos aqui
                     } else if (c =='\n' ||c =='\n' || c =='\t') {
@@ -38,9 +43,21 @@ public class compileTab {
                     break;
                     
                 case 2:
-                    if (c == '!' && v == '>') {
-                        caso = 0;
+                    f+=c;
+                    break;
+                    
+                case 3:
+                    if (Character.isLetterOrDigit(c) || c == '_') {
+                        f+=c;
+                    }else{
+                        //rope
+                        //mete al token jaja
+                        caso=0;
                     }
+                    break;
+                    
+                case 4:
+                    
                     break;
             }
         }
