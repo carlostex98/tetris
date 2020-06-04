@@ -7,7 +7,7 @@ public class analizador {
     LinkedList<String[]> tokens = new LinkedList<>();
     LinkedList<String[]> errores = new LinkedList<>();
 
-    LinkedList<String[]> piezas = new LinkedList<>();
+    LinkedList<String> piezas = new LinkedList<>();
     
     public void a_token(String tipo, String contenido, int linea, int columna) {
         String[] s = {Integer.toString(tokens.size()), tipo, contenido, Integer.toString(linea), Integer.toString(columna)};
@@ -118,8 +118,10 @@ public class analizador {
             c = data.charAt(i);
             if (elementos.contains(Character.toString(c))) {
                 //ok
+                piezas.add(Character.toString(c));
             } else if (c == '\n' || c == '\t' || c == ' ') {
                 //jump
+                //nothing
             }else{
                 //error
             }
