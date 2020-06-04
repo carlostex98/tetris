@@ -4,9 +4,11 @@ import java.util.LinkedList;
 
 public class analizador {
 
-    LinkedList<String[]> tokens = new LinkedList<String[]>();
-    LinkedList<String[]> errores = new LinkedList<String[]>();
+    LinkedList<String[]> tokens = new LinkedList<>();
+    LinkedList<String[]> errores = new LinkedList<>();
 
+    LinkedList<String[]> piezas = new LinkedList<>();
+    
     public void a_token(String tipo, String contenido, int linea, int columna) {
         String[] s = {Integer.toString(tokens.size()), tipo, contenido, Integer.toString(linea), Integer.toString(columna)};
         tokens.add(s);
@@ -22,7 +24,7 @@ public class analizador {
         errores.clear();
     }
 
-    public void verTablero(String data) {
+    public void analizaTablero(String data) {
         char c = ' ';  //variables
         char v = ' ';  //var predictiva
 
@@ -35,7 +37,7 @@ public class analizador {
 
         for (int i = 0; i < data.length(); i++) {
             c = data.charAt(i);
-
+            cl++;
             if (i < data.length() - 1) {
                 c = data.charAt(i + 1);
             }
@@ -44,10 +46,10 @@ public class analizador {
                 case 0:
                     if (c == '/' && v == '/') {
                         caso = 1;
-                        f="//";
+                        f = "//";
                     } else if (c == '<' && v == '!') {
                         caso = 2;
-                        f="<!";
+                        f = "<!";
                     } else if (Character.isLetter(c) || c == '_') {
                         caso = 3;
                         //identificador
@@ -58,6 +60,7 @@ public class analizador {
                         f = Character.toString(c);
                     } else if (c == '*' || c == '#') {
                         //nos mantenemos aqui, pero añade 
+
                     } else if (c == '\n' || c == '\n' || c == '\t') {
                         //nos mantenemos aqui salto de linea
                     } else {
@@ -100,6 +103,27 @@ public class analizador {
                     break;
 
             }
+
+            if (c == '\n') {
+                ln++;
+                cl = 1;
+            }
         }
     }
+
+    public void analizaPiezas(String data) {
+        char c = ' ';
+        String elementos = "IJLOSZTv^<>";
+        for (int i = 0; i < data.length(); i++) {
+            c = data.charAt(i);
+            if (elementos.contains(Character.toString(c))) {
+                //ok
+            } else if (c == '\n' || c == '\t' || c == ' ') {
+                //jump
+            }else{
+                //error
+            }
+        }
+    }
+
 }
