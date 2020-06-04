@@ -3,33 +3,41 @@ package thanos;
 import java.util.LinkedList;
 
 public class analizador {
-    
-    LinkedList <String[]> tokens=new LinkedList<String[]>();
-    LinkedList <String[]> errores=new LinkedList<String[]>();
-    
-    public void a_token(){
-        
+
+    LinkedList<String[]> tokens = new LinkedList<String[]>();
+    LinkedList<String[]> errores = new LinkedList<String[]>();
+
+    public void a_token() {
+
     }
-    
-    public void a_error(){
-        
+
+    public void a_error() {
+
     }
-    
-    public void reset_list(){
+
+    public void reset_list() {
         tokens.clear();
         errores.clear();
     }
 
     public void verTablero(String data) {
-        char c = ' ';
-        char v = ' ';
+        char c = ' ';  //variables
+        char v = ' ';  //var predictiva
+        
         int caso = 0;
+        
+        int ln = 1; //linea
+        int cl = 1; //columna
+        
+        String f = "";//variable de suma
+        
         for (int i = 0; i < data.length(); i++) {
             c = data.charAt(i);
-            String f = "";
+            
             if (i < data.length() - 1) {
                 c = data.charAt(i + 1);
             }
+            
             switch (caso) {
                 case 0:
                     if (c == '/' && v == '/') {
@@ -61,7 +69,13 @@ public class analizador {
                     break;
 
                 case 2:
-                    f += c;
+                    if (c == '!' && v == '>') {
+                        //agregamos el token
+                        caso = 0;
+                    } else {
+                        f += c;
+                    }
+
                     break;
 
                 case 3:
@@ -83,8 +97,7 @@ public class analizador {
                         caso = 0;
                     }
                     break;
-                    
-                    
+
             }
         }
     }
