@@ -8,7 +8,7 @@ public class analizador {
     LinkedList<String[]> errores = new LinkedList<>();
 
     LinkedList<String> piezas = new LinkedList<>();
-    
+
     public void a_token(String tipo, String contenido, int linea, int columna) {
         String[] s = {Integer.toString(tokens.size()), tipo, contenido, Integer.toString(linea), Integer.toString(columna)};
         tokens.add(s);
@@ -47,6 +47,7 @@ public class analizador {
                     if (c == '/' && v == '/') {
                         caso = 1;
                         f = "//";
+
                     } else if (c == '<' && v == '!') {
                         caso = 2;
                         f = "<!";
@@ -71,6 +72,9 @@ public class analizador {
                     if (c == '\n') {
                         //jump
                         caso = 0;
+                        a_token("Comentario", f, ln, cl);
+                    }else{
+                        f+=c;
                     }
                     break;
 
@@ -78,6 +82,7 @@ public class analizador {
                     if (c == '!' && v == '>') {
                         //agregamos el token
                         caso = 0;
+                        a_token("Comentario multilinea", f, ln, cl);
                     } else {
                         f += c;
                     }
@@ -88,7 +93,7 @@ public class analizador {
                     if (Character.isLetterOrDigit(c) || c == '_') {
                         f += c;
                     } else {
-
+                        a_token("Indentificador", f, ln, cl);
                         caso = 0;
                     }
                     break;
@@ -97,7 +102,7 @@ public class analizador {
                     if (Character.isDigit(c)) {
                         f += c;
                     } else {
-
+                        a_token("Numero", f, ln, cl);
                         caso = 0;
                     }
                     break;
@@ -122,7 +127,7 @@ public class analizador {
             } else if (c == '\n' || c == '\t' || c == ' ') {
                 //jump
                 //nothing
-            }else{
+            } else {
                 //error
             }
         }
