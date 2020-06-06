@@ -24,6 +24,12 @@ public class analizador {
         errores.clear();
     }
 
+    public void startAnalisis(String a, String b) {
+        reset_list();
+        analizaTablero(a);
+        analizaPiezas(b);
+    }
+
     public void analizaTablero(String data) {
         char c = ' ';  //variables
         char v = ' ';  //var predictiva
@@ -61,11 +67,12 @@ public class analizador {
                         f = Character.toString(c);
                     } else if (c == '*' || c == '#') {
                         //nos mantenemos aqui, pero añade 
-
+                        a_token("Elemento", Character.toString(c), ln, cl);
                     } else if (c == '\n' || c == '\n' || c == '\t') {
                         //nos mantenemos aqui salto de linea
                     } else {
-                        //error 
+                        //error
+                        a_error("Elemento lexico desconocido " + Character.toString(c), ln, cl);
                     }
                     break;
                 case 1:
@@ -73,8 +80,8 @@ public class analizador {
                         //jump
                         caso = 0;
                         a_token("Comentario", f, ln, cl);
-                    }else{
-                        f+=c;
+                    } else {
+                        f += c;
                     }
                     break;
 
@@ -118,17 +125,57 @@ public class analizador {
 
     public void analizaPiezas(String data) {
         char c = ' ';
-        String elementos = "IJLOSZTv^<>";
+        int ln = 1;
+        int cl = 1;
+        String elementos = "IJLOSZTv^<>,";
         for (int i = 0; i < data.length(); i++) {
+            cl++;
             c = data.charAt(i);
             if (elementos.contains(Character.toString(c))) {
                 //ok
                 piezas.add(Character.toString(c));
             } else if (c == '\n' || c == '\t' || c == ' ') {
-                //jump
-                //nothing
+                ln++;
+                cl = 1;
             } else {
                 //error
+                a_error("Elemento lexico desconocido " + Character.toString(c), ln, cl);
+            }
+        }
+    }
+
+    public void gramarPiezas() {
+        //en base a piezas
+        //(letra coma orientacion)+
+        String letra = "IJLOSZT";
+        String orientacion = "v^<>";
+        int e = 0;
+        for (String pieza : piezas) {
+            switch (e) {
+                case 0:
+                    if (letra.contains(pieza)) {
+                        e = 1;
+                    } else {
+                        //error
+                        a_error("Elemento sintactico desconocido " + pieza, 0, 0);
+                    }
+                    break;
+                case 1:
+                    if (pieza.equals(",")) {
+                        e = 2;
+                    } else {
+                        //error
+                        a_error("Elemento sintactico desconocido " + pieza, 0, 0);
+                    }
+                    break;
+                case 2:
+                    if (letra.contains(orientacion)) {
+                        e = 0;
+                    } else {
+                        //error
+                        a_error("Elemento sintactico desconocido " + pieza, 0, 0);
+                    }
+                    break;
             }
         }
     }
