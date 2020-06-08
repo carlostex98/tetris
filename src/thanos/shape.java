@@ -58,7 +58,8 @@ public class shape {
 
         var r = new Random();
         int x = Math.abs(r.nextInt()) % 7 + 1;
-
+        //System.out.println(x);
+        x=3;
         Tetrominoe[] values = Tetrominoe.values();
         setShape(values[x]);
     }

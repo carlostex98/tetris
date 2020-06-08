@@ -19,13 +19,13 @@ public class tablero extends JPanel {
 
     Timer timer;
     boolean isFallingFinished = false;
-    private boolean isPaused = false;
-    private int numLinesRemoved = 0;
-    private int curX = 0;
-    private int curY = 0;
-    private JLabel statusbar;
-    private shape curPiece;
-    private Tetrominoe[] board;
+    boolean isPaused = false;
+    int numLinesRemoved = 0;
+    int curX = 0;
+    int curY = 0;
+    JLabel statusbar;
+    shape curPiece;
+    Tetrominoe[] board;
 
     public tablero(tete parent) {
 
