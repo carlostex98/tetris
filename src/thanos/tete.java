@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 
 
 public class tete extends JFrame{
-    private JLabel statusbar;
+    private JLabel stat_bar;
     public tete() {
 
         initEsto();
@@ -15,8 +15,8 @@ public class tete extends JFrame{
     
     private void initEsto() {
 
-        statusbar = new JLabel(" 0");
-        add(statusbar, BorderLayout.SOUTH);
+        stat_bar = new JLabel(" 0");
+        add(stat_bar, BorderLayout.SOUTH);
 
         var board = new tablero (this);
         add(board);
@@ -24,11 +24,11 @@ public class tete extends JFrame{
 
         setTitle("Tetris");
         setSize(200, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
     JLabel getStatusBar() {
 
-        return statusbar;
+        return stat_bar;
     }
 }

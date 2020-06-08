@@ -12,12 +12,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class tablero extends JPanel {
-    private final int BOARD_WIDTH = 10;
-    private final int BOARD_HEIGHT = 22;
-    private final int PERIOD_INTERVAL = 300;
 
-    private Timer timer;
-    private boolean isFallingFinished = false;
+    int BOARD_WIDTH = 10;
+    int BOARD_HEIGHT = 22;
+    int PERIOD_INTERVAL = 300; //300 normal  100->super fast
+
+    Timer timer;
+    boolean isFallingFinished = false;
     private boolean isPaused = false;
     private int numLinesRemoved = 0;
     private int curX = 0;
@@ -32,13 +33,13 @@ public class tablero extends JPanel {
         //throw new UnsupportedOperationException("Not supported yet."); 
     }
 
-    
     private void initBoard(tete parent) {
 
         setFocusable(true);
         statusbar = parent.getStatusBar();
         addKeyListener(new TAdapter());
     }
+
     private int squareWidth() {
 
         return (int) getSize().getWidth() / BOARD_WIDTH;
@@ -53,6 +54,7 @@ public class tablero extends JPanel {
 
         return board[(y * BOARD_WIDTH) + x];
     }
+
     void start() {
 
         curPiece = new shape();
@@ -64,7 +66,7 @@ public class tablero extends JPanel {
         timer = new Timer(PERIOD_INTERVAL, new GameCycle());
         timer.start();
     }
-    
+
     private void pause() {
 
         isPaused = !isPaused;
@@ -79,14 +81,14 @@ public class tablero extends JPanel {
 
         repaint();
     }
-    
+
     @Override
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
         doDrawing(g);
     }
-    
+
     private void doDrawing(Graphics g) {
 
         var size = getSize();
@@ -119,7 +121,7 @@ public class tablero extends JPanel {
             }
         }
     }
-    
+
     private void dropDown() {
 
         int newY = curY;
@@ -136,7 +138,7 @@ public class tablero extends JPanel {
 
         pieceDropped();
     }
-    
+
     private void oneLineDown() {
 
         if (!tryMove(curPiece, curX, curY - 1)) {
@@ -152,7 +154,7 @@ public class tablero extends JPanel {
             board[i] = Tetrominoe.NoShape;
         }
     }
-    
+
     private void pieceDropped() {
 
         for (int i = 0; i < 4; i++) {
@@ -169,7 +171,7 @@ public class tablero extends JPanel {
             newPiece();
         }
     }
-    
+
     private void newPiece() {
 
         curPiece.setRandomShape();
@@ -185,7 +187,7 @@ public class tablero extends JPanel {
             statusbar.setText(msg);
         }
     }
-    
+
     private boolean tryMove(shape newPiece, int newX, int newY) {
 
         for (int i = 0; i < 4; i++) {
@@ -212,7 +214,7 @@ public class tablero extends JPanel {
 
         return true;
     }
-    
+
     private void removeFullLines() {
 
         int numFullLines = 0;
@@ -251,13 +253,13 @@ public class tablero extends JPanel {
             curPiece.setShape(Tetrominoe.NoShape);
         }
     }
-    
+
     private void drawSquare(Graphics g, int x, int y, Tetrominoe shape) {
 
         Color colors[] = {new Color(0, 0, 0), new Color(204, 102, 102),
-                new Color(102, 204, 102), new Color(102, 102, 204),
-                new Color(204, 204, 102), new Color(204, 102, 204),
-                new Color(102, 204, 204), new Color(218, 170, 0)
+            new Color(102, 204, 102), new Color(102, 102, 204),
+            new Color(204, 204, 102), new Color(204, 102, 204),
+            new Color(102, 204, 204), new Color(218, 170, 0)
         };
 
         var color = colors[shape.ordinal()];
@@ -275,7 +277,7 @@ public class tablero extends JPanel {
         g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
                 x + squareWidth() - 1, y + 1);
     }
-    
+
     private class GameCycle implements ActionListener {
 
         @Override
@@ -290,7 +292,7 @@ public class tablero extends JPanel {
         update();
         repaint();
     }
-    
+
     private void update() {
 
         if (isPaused) {
@@ -307,6 +309,7 @@ public class tablero extends JPanel {
             oneLineDown();
         }
     }
+
     class TAdapter extends KeyAdapter {
 
         @Override
@@ -322,15 +325,22 @@ public class tablero extends JPanel {
             // Java 12 switch expressions
             switch (keycode) {
 
-                case KeyEvent.VK_P -> pause();
-                case KeyEvent.VK_LEFT -> tryMove(curPiece, curX - 1, curY);
-                case KeyEvent.VK_RIGHT -> tryMove(curPiece, curX + 1, curY);
-                case KeyEvent.VK_DOWN -> tryMove(curPiece.rotateRight(), curX, curY);
-                case KeyEvent.VK_UP -> tryMove(curPiece.rotateLeft(), curX, curY);
-                case KeyEvent.VK_SPACE -> dropDown();
-                case KeyEvent.VK_D -> oneLineDown();
+                case KeyEvent.VK_P ->
+                    pause();
+                case KeyEvent.VK_LEFT ->
+                    tryMove(curPiece, curX - 1, curY);
+                case KeyEvent.VK_RIGHT ->
+                    tryMove(curPiece, curX + 1, curY);
+                case KeyEvent.VK_DOWN ->
+                    tryMove(curPiece.rotateRight(), curX, curY);
+                case KeyEvent.VK_UP ->
+                    tryMove(curPiece.rotateLeft(), curX, curY);
+                case KeyEvent.VK_SPACE ->
+                    dropDown();
+                case KeyEvent.VK_D ->
+                    oneLineDown();
             }
         }
     }
-    
+
 }
