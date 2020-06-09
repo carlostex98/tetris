@@ -18,16 +18,16 @@ public class tete extends JFrame{
         stat_bar = new JLabel(" 0");
         add(stat_bar, BorderLayout.SOUTH);
 
-        var board = new tablero (this);
-        add(board);
-        board.start();
+        var tab_x = new tablero (this);
+        add(tab_x);
+        tab_x.start_game();
 
         setTitle("Tetris");
         setSize(200, 400);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
-    JLabel getStatusBar() {
+    JLabel getStatBar() {
 
         return stat_bar;
     }

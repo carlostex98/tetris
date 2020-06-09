@@ -1,6 +1,6 @@
 package thanos;
 
-import thanos.shape.Tetrominoe;
+import thanos.shape.temte;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -17,15 +17,15 @@ public class tablero extends JPanel {
     int BOARD_HEIGHT = 22;
     int PERIOD_INTERVAL = 300; //300 normal  100->super fast
 
-    Timer timer;
-    boolean isFallingFinished = false;
-    boolean isPaused = false;
-    int numLinesRemoved = 0;
-    int curX = 0;
-    int curY = 0;
-    JLabel statusbar;
-    shape curPiece;
-    Tetrominoe[] board;
+    Timer timex;
+    boolean isFallEnd = false;
+    boolean spause = false;
+    int lnDrop = 0;
+    int cur_x = 0;
+    int cur_y = 0;
+    JLabel status_bar;
+    shape curr_pieza;
+    temte[] board;
 
     public tablero(tete parent) {
 
@@ -33,50 +33,50 @@ public class tablero extends JPanel {
         //throw new UnsupportedOperationException("Not supported yet."); 
     }
 
-    private void initBoard(tete parent) {
+    void initBoard(tete parent) {
 
         setFocusable(true);
-        statusbar = parent.getStatusBar();
+        status_bar = parent.getStatBar();
         addKeyListener(new TAdapter());
     }
 
-    private int squareWidth() {
+    int squareWidth() {
 
         return (int) getSize().getWidth() / BOARD_WIDTH;
     }
 
-    private int squareHeight() {
+    int squareHeight() {
 
         return (int) getSize().getHeight() / BOARD_HEIGHT;
     }
 
-    private Tetrominoe shapeAt(int x, int y) {
+    temte shapeAt(int x, int y) {
 
         return board[(y * BOARD_WIDTH) + x];
     }
 
-    void start() {
+    void start_game() {
 
-        curPiece = new shape();
-        board = new Tetrominoe[BOARD_WIDTH * BOARD_HEIGHT];
+        curr_pieza = new shape();
+        board = new temte[BOARD_WIDTH * BOARD_HEIGHT];
 
         clearBoard();
         newPiece();
 
-        timer = new Timer(PERIOD_INTERVAL, new GameCycle());
-        timer.start();
+        timex = new Timer(PERIOD_INTERVAL, new GameCycle());
+        timex.start();
     }
 
-    private void pause() {
+    private void paused() {
 
-        isPaused = !isPaused;
+        spause = !spause;
 
-        if (isPaused) {
+        if (spause) {
 
-            statusbar.setText("paused");
+            status_bar.setText("En pausa");
         } else {
 
-            statusbar.setText(String.valueOf(numLinesRemoved));
+            status_bar.setText(String.valueOf(lnDrop));
         }
 
         repaint();
@@ -98,9 +98,9 @@ public class tablero extends JPanel {
 
             for (int j = 0; j < BOARD_WIDTH; j++) {
 
-                Tetrominoe shape = shapeAt(j, BOARD_HEIGHT - i - 1);
+                temte shape = shapeAt(j, BOARD_HEIGHT - i - 1);
 
-                if (shape != Tetrominoe.NoShape) {
+                if (shape != temte.NShape) {
 
                     drawSquare(g, j * squareWidth(),
                             boardTop + i * squareHeight(), shape);
@@ -108,27 +108,27 @@ public class tablero extends JPanel {
             }
         }
 
-        if (curPiece.getShape() != Tetrominoe.NoShape) {
+        if (curr_pieza.getShape() != temte.NShape) {
 
             for (int i = 0; i < 4; i++) {
 
-                int x = curX + curPiece.x(i);
-                int y = curY - curPiece.y(i);
+                int x = cur_x + curr_pieza.x(i);
+                int y = cur_y - curr_pieza.y(i);
 
                 drawSquare(g, x * squareWidth(),
                         boardTop + (BOARD_HEIGHT - y - 1) * squareHeight(),
-                        curPiece.getShape());
+                        curr_pieza.getShape());
             }
         }
     }
 
-    private void dropDown() {
+    private void drop() {
 
-        int newY = curY;
+        int newY = cur_y;
 
         while (newY > 0) {
 
-            if (!tryMove(curPiece, curX, newY - 1)) {
+            if (!Move(curr_pieza, cur_x, newY - 1)) {
 
                 break;
             }
@@ -139,9 +139,9 @@ public class tablero extends JPanel {
         pieceDropped();
     }
 
-    private void oneLineDown() {
+    private void oneDown() {
 
-        if (!tryMove(curPiece, curX, curY - 1)) {
+        if (!Move(curr_pieza, cur_x, cur_y - 1)) {
 
             pieceDropped();
         }
@@ -151,7 +151,7 @@ public class tablero extends JPanel {
 
         for (int i = 0; i < BOARD_HEIGHT * BOARD_WIDTH; i++) {
 
-            board[i] = Tetrominoe.NoShape;
+            board[i] = temte.NShape;
         }
     }
 
@@ -159,14 +159,14 @@ public class tablero extends JPanel {
 
         for (int i = 0; i < 4; i++) {
 
-            int x = curX + curPiece.x(i);
-            int y = curY - curPiece.y(i);
-            board[(y * BOARD_WIDTH) + x] = curPiece.getShape();
+            int x = cur_x + curr_pieza.x(i);
+            int y = cur_y - curr_pieza.y(i);
+            board[(y * BOARD_WIDTH) + x] = curr_pieza.getShape();
         }
 
         removeFullLines();
 
-        if (!isFallingFinished) {
+        if (!isFallEnd) {
 
             newPiece();
         }
@@ -174,21 +174,21 @@ public class tablero extends JPanel {
 
     private void newPiece() {
 
-        curPiece.setRandomShape();
-        curX = BOARD_WIDTH / 2 + 1;
-        curY = BOARD_HEIGHT - 1 + curPiece.minY();
+        curr_pieza.setRandomShape();
+        cur_x = BOARD_WIDTH / 2 + 1;
+        cur_y = BOARD_HEIGHT - 1 + curr_pieza.minY();
 
-        if (!tryMove(curPiece, curX, curY)) {
+        if (!Move(curr_pieza, cur_x, cur_y)) {
 
-            curPiece.setShape(Tetrominoe.NoShape);
-            timer.stop();
+            curr_pieza.setShape(temte.NShape);
+            timex.stop();
 
-            var msg = String.format("Game over. Score: %d", numLinesRemoved);
-            statusbar.setText(msg);
+            var msg = String.format("Game over. Score: %d", lnDrop);
+            status_bar.setText(msg);
         }
     }
 
-    private boolean tryMove(shape newPiece, int newX, int newY) {
+    private boolean Move(shape newPiece, int newX, int newY) {
 
         for (int i = 0; i < 4; i++) {
 
@@ -200,15 +200,15 @@ public class tablero extends JPanel {
                 return false;
             }
 
-            if (shapeAt(x, y) != Tetrominoe.NoShape) {
+            if (shapeAt(x, y) != temte.NShape) {
 
                 return false;
             }
         }
 
-        curPiece = newPiece;
-        curX = newX;
-        curY = newY;
+        curr_pieza = newPiece;
+        cur_x = newX;
+        cur_y = newY;
 
         repaint();
 
@@ -225,7 +225,7 @@ public class tablero extends JPanel {
 
             for (int j = 0; j < BOARD_WIDTH; j++) {
 
-                if (shapeAt(j, i) == Tetrominoe.NoShape) {
+                if (shapeAt(j, i) == temte.NShape) {
 
                     lineIsFull = false;
                     break;
@@ -246,39 +246,37 @@ public class tablero extends JPanel {
 
         if (numFullLines > 0) {
 
-            numLinesRemoved += numFullLines;
+            lnDrop += numFullLines;
 
-            statusbar.setText(String.valueOf(numLinesRemoved));
-            isFallingFinished = true;
-            curPiece.setShape(Tetrominoe.NoShape);
+            status_bar.setText(String.valueOf(lnDrop));
+            isFallEnd = true;
+            curr_pieza.setShape(temte.NShape);
         }
     }
 
-    private void drawSquare(Graphics g, int x, int y, Tetrominoe shape) {
+    private void drawSquare(Graphics gx, int xx, int yy, temte shape) {
 
-        Color colors[] = {new Color(0, 0, 0), new Color(204, 102, 102),
+        Color colores[] = {new Color(0, 0, 0), new Color(204, 102, 102),
             new Color(102, 204, 102), new Color(102, 102, 204),
             new Color(204, 204, 102), new Color(204, 102, 204),
             new Color(102, 204, 204), new Color(218, 170, 0)
         };
 
-        var color = colors[shape.ordinal()];
+        var colorix = colores[shape.ordinal()];
 
-        g.setColor(color);
-        g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
+        gx.setColor(colorix);
+        gx.fillRect(xx + 1, yy + 1, squareWidth() - 2, squareHeight() - 2);
 
-        g.setColor(color.brighter());
-        g.drawLine(x, y + squareHeight() - 1, x, y);
-        g.drawLine(x, y, x + squareWidth() - 1, y);
+        gx.setColor(colorix.brighter());
+        gx.drawLine(xx, yy + squareHeight() - 1, xx, yy);
+        gx.drawLine(xx, yy, xx + squareWidth() - 1, yy);
 
-        g.setColor(color.darker());
-        g.drawLine(x + 1, y + squareHeight() - 1,
-                x + squareWidth() - 1, y + squareHeight() - 1);
-        g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1,
-                x + squareWidth() - 1, y + 1);
+        gx.setColor(colorix.darker());
+        gx.drawLine(xx + 1, yy + squareHeight() - 1, xx + squareWidth() - 1, yy + squareHeight() - 1);
+        gx.drawLine(xx + squareWidth() - 1, yy + squareHeight() - 1, xx + squareWidth() - 1, yy + 1);
     }
 
-    private class GameCycle implements ActionListener {
+    class GameCycle implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -288,25 +286,21 @@ public class tablero extends JPanel {
     }
 
     private void doGameCycle() {
-
-        update();
+        update_board();
+        //repintamos
         repaint();
     }
 
-    private void update() {
+    private void update_board() {
 
-        if (isPaused) {
-
+        if (spause) {
             return;
         }
-
-        if (isFallingFinished) {
-
-            isFallingFinished = false;
+        if (isFallEnd) {
+            isFallEnd = false;
             newPiece();
         } else {
-
-            oneLineDown();
+            oneDown();
         }
     }
 
@@ -314,31 +308,27 @@ public class tablero extends JPanel {
 
         @Override
         public void keyPressed(KeyEvent e) {
-
-            if (curPiece.getShape() == Tetrominoe.NoShape) {
-
+            if (curr_pieza.getShape() == temte.NShape) {
                 return;
             }
-
-            int keycode = e.getKeyCode();
-
+            int keyPress = e.getKeyCode();
             // Java 12 switch expressions
-            switch (keycode) {
+            switch (keyPress) {
 
                 case KeyEvent.VK_P ->
-                    pause();
+                    paused();
                 case KeyEvent.VK_LEFT ->
-                    tryMove(curPiece, curX - 1, curY);
+                    Move(curr_pieza, cur_x - 1, cur_y);
                 case KeyEvent.VK_RIGHT ->
-                    tryMove(curPiece, curX + 1, curY);
+                    Move(curr_pieza, cur_x + 1, cur_y);
                 case KeyEvent.VK_DOWN ->
-                    tryMove(curPiece.rotateRight(), curX, curY);
+                    Move(curr_pieza.rotateR(), cur_x, cur_y);
                 case KeyEvent.VK_UP ->
-                    tryMove(curPiece.rotateLeft(), curX, curY);
+                    Move(curr_pieza.rotateL(), cur_x, cur_y);
                 case KeyEvent.VK_SPACE ->
-                    dropDown();
+                    drop();
                 case KeyEvent.VK_D ->
-                    oneLineDown();
+                    oneDown();
             }
         }
     }

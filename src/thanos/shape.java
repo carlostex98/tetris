@@ -4,24 +4,24 @@ import java.util.Random;
 
 public class shape {
 
-    protected enum Tetrominoe { NoShape, ZShape, SShape, LineShape,
+    protected enum temte{ NShape, Zshape, Sshape, LineShape,
         TShape, SquareShape, LShape, MirroredLShape }
 
-    private Tetrominoe pieceShape;
-    private int coords[][];
-    private int[][][] coordsTable;
+    temte pieceShape;
+    int coordenadas[][];
+    int[][][] tabla_cords;
 
 
     public shape() {
 
-        initShape();
+        initForma();
     }
 
-    private void initShape() {
+    private void initForma() {
 
-        coords = new int[4][2];
+        coordenadas = new int[4][2];
 
-        coordsTable = new int[][][] {
+        tabla_cords = new int[][][] {
                 { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
                 { { 0, -1 },  { 0, 0 },   { -1, 0 },  { -1, 1 } },
                 { { 0, -1 },  { 0, 0 },   { 1, 0 },   { 1, 1 } },
@@ -32,27 +32,27 @@ public class shape {
                 { { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } }
         };
 
-        setShape(Tetrominoe.NoShape);
+        setShape(temte.NShape);
     }
 
-    protected void setShape(Tetrominoe shape) {
+    protected void setShape(temte shape) {
 
         for (int i = 0; i < 4 ; i++) {
 
             for (int j = 0; j < 2; ++j) {
 
-                coords[i][j] = coordsTable[shape.ordinal()][i][j];
+                coordenadas[i][j] = tabla_cords[shape.ordinal()][i][j];
             }
         }
 
         pieceShape = shape;
     }
 
-    private void setX(int index, int x) { coords[index][0] = x; }
-    private void setY(int index, int y) { coords[index][1] = y; }
-    public int x(int index) { return coords[index][0]; }
-    public int y(int index) { return coords[index][1]; }
-    public Tetrominoe getShape()  { return pieceShape; }
+    private void set_x(int index, int x) { coordenadas[index][0] = x; }
+    private void set_y(int index, int y) { coordenadas[index][1] = y; }
+    public int x(int index) { return coordenadas[index][0]; }
+    public int y(int index) { return coordenadas[index][1]; }
+    public temte getShape()  { return pieceShape; }
 
     public void setRandomShape() {
 
@@ -60,17 +60,17 @@ public class shape {
         int x = Math.abs(r.nextInt()) % 7 + 1;
         //System.out.println(x);
         x=3;
-        Tetrominoe[] values = Tetrominoe.values();
+        temte[] values = temte.values();
         setShape(values[x]);
     }
 
     public int minX() {
 
-        int m = coords[0][0];
+        int m = coordenadas[0][0];
 
         for (int i=0; i < 4; i++) {
 
-            m = Math.min(m, coords[i][0]);
+            m = Math.min(m, coordenadas[i][0]);
         }
 
         return m;
@@ -79,51 +79,47 @@ public class shape {
 
     public int minY() {
 
-        int m = coords[0][1];
+        int m = coordenadas[0][1];
 
         for (int i=0; i < 4; i++) {
 
-            m = Math.min(m, coords[i][1]);
+            m = Math.min(m, coordenadas[i][1]);
         }
 
         return m;
     }
 
-    public shape rotateLeft() {
+    public shape rotateL() {
 
-        if (pieceShape == Tetrominoe.SquareShape) {
+        if (pieceShape == temte.SquareShape) {
 
             return this;
         }
 
-        var result = new shape();
-        result.pieceShape = pieceShape;
+        var result1 = new shape();
+        result1.pieceShape = pieceShape;
 
         for (int i = 0; i < 4; ++i) {
 
-            result.setX(i, y(i));
-            result.setY(i, -x(i));
+            result1.set_x(i, y(i));
+            result1.set_y(i, -x(i));
         }
 
-        return result;
+        return result1;
     }
 
-    public shape rotateRight() {
+    public shape rotateR() {
 
-        if (pieceShape == Tetrominoe.SquareShape) {
-
+        if (pieceShape == temte.SquareShape) {
             return this;
         }
-
-        var result = new shape();
-        result.pieceShape = pieceShape;
-
+        var res = new shape();
+        res.pieceShape = pieceShape;
         for (int i = 0; i < 4; ++i) {
-
-            result.setX(i, -y(i));
-            result.setY(i, x(i));
+            res.set_x(i, -y(i));
+            res.set_y(i, x(i));
         }
 
-        return result;
+        return res;
     }
 }
