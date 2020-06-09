@@ -4,20 +4,16 @@ package thanos;
 import java.util.LinkedList;
 
 public class listas {
-    LinkedList <String[]> tokens=new LinkedList<String[]>();
+    LinkedList <String[]> niveles=new LinkedList<String[]>();
     LinkedList <String[]> errores=new LinkedList<String[]>();
     
-    public void a_token(){
-        
+    public void a_level(String a, String b, String c){
+        String[] lev={a, b, c};//lins, cols, nombre
+        niveles.push(lev);
     }
     
-    public void a_error(){
-        
-    }
-    
-    public void reset_list(){
-        tokens.clear();
-        errores.clear();
+    public void cl_all(){
+        niveles = null;
     }
     
 }
