@@ -9,6 +9,22 @@ public class analizador {
 
     LinkedList<String> piezas = new LinkedList<>();
 
+    private void print_all() {
+        for (String[] token : tokens) {
+            for (String token1 : token) {
+                System.out.print(token1 + "  ");
+            }
+            System.out.print("\n");
+        }
+        System.out.println("------------------");
+        for (String[] err : errores) {
+            for (String token1 : err) {
+                System.out.print(token1 + "  ");
+            }
+            System.out.print("\n");
+        }
+    }
+
     public void a_token(String tipo, String contenido, int linea, int columna) {
         String[] s = {Integer.toString(tokens.size()), tipo, contenido, Integer.toString(linea), Integer.toString(columna)};
         tokens.add(s);
@@ -28,9 +44,11 @@ public class analizador {
         reset_list();
         analizaTablero(a);
         analizaPiezas(b);
+        print_all();
     }
 
     public void analizaTablero(String data) {
+
         char c = ' ';  //variables
         char v = ' ';  //var predictiva
 
@@ -43,9 +61,10 @@ public class analizador {
 
         for (int i = 0; i < data.length(); i++) {
             c = data.charAt(i);
+            
             cl++;
             if (i < data.length() - 1) {
-                c = data.charAt(i + 1);
+                v = data.charAt(i + 1);
             }
 
             switch (caso) {
@@ -65,10 +84,10 @@ public class analizador {
                         //digito
                         caso = 4;
                         f = Character.toString(c);
-                    } else if (c == '*' || c == '#') {
+                    } else if (c == '*' || c == '#' || c == '-') {
                         //nos mantenemos aqui, pero añade 
                         a_token("Elemento", Character.toString(c), ln, cl);
-                    } else if (c == '\n' || c == '\n' || c == '\t') {
+                    } else if (c == ' ' || c == '\n' || c == '\t') {
                         //nos mantenemos aqui salto de linea
                     } else {
                         //error
@@ -80,6 +99,7 @@ public class analizador {
                         //jump
                         caso = 0;
                         a_token("Comentario", f, ln, cl);
+                        
                     } else {
                         f += c;
                     }
@@ -102,6 +122,7 @@ public class analizador {
                     } else {
                         a_token("Indentificador", f, ln, cl);
                         caso = 0;
+                        i--;
                     }
                     break;
 
@@ -111,6 +132,7 @@ public class analizador {
                     } else {
                         a_token("Numero", f, ln, cl);
                         caso = 0;
+                        i--;
                     }
                     break;
 

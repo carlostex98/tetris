@@ -1,17 +1,13 @@
-
 package thanos;
 
 import java.awt.EventQueue;
 
-
 public class vistaEditor extends javax.swing.JFrame {
 
-    
     public vistaEditor() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -19,9 +15,9 @@ public class vistaEditor extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        f1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        f2 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -33,13 +29,14 @@ public class vistaEditor extends javax.swing.JFrame {
 
         jLabel1.setText("Editor del juego");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        f1.setColumns(20);
+        f1.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
+        f1.setRows(5);
+        jScrollPane1.setViewportView(f1);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        f2.setColumns(20);
+        f2.setRows(5);
+        jScrollPane2.setViewportView(f2);
 
         jLabel2.setText("Archivo de niveles");
 
@@ -114,15 +111,16 @@ public class vistaEditor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-        EventQueue.invokeLater(() -> {
+
+        theter.analiza.startAnalisis(f1.getText()+" ", f2.getText()+" ");
+
+        /*EventQueue.invokeLater(() -> {
             var super_super_game = new tete();
             super_super_game.setVisible(true);
-        });
-        
+        });*/
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -156,6 +154,8 @@ public class vistaEditor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea f1;
+    private javax.swing.JTextArea f2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -166,7 +166,5 @@ public class vistaEditor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }
