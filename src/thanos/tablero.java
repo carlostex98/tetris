@@ -41,12 +41,12 @@ public class tablero extends JPanel {
         addKeyListener(new TAdapter());
     }
     
-    int squareWidth() {
+    int squareW() {
         
         return (int) getSize().getWidth() / BOARD_WIDTH;
     }
     
-    int squareHeight() {
+    int squareH() {
         
         return (int) getSize().getHeight() / BOARD_HEIGHT;
     }
@@ -87,13 +87,13 @@ public class tablero extends JPanel {
     public void paintComponent(Graphics g) {
         
         super.paintComponent(g);
-        doDrawing(g);
+        doDraw(g);
     }
     
-    private void doDrawing(Graphics g) {
+    private void doDraw(Graphics g) {
         
         var size = getSize();
-        int boardTop = (int) size.getHeight() - BOARD_HEIGHT * squareHeight();
+        int boardTop = (int) size.getHeight() - BOARD_HEIGHT * squareH();
         
         for (int i = 0; i < BOARD_HEIGHT; i++) {
             
@@ -103,8 +103,8 @@ public class tablero extends JPanel {
                 
                 if (shape != temte.NShape) {
                     
-                    drawSquare(g, j * squareWidth(),
-                            boardTop + i * squareHeight(), shape);
+                    drawSquare(g, j * squareW(),
+                            boardTop + i * squareH(), shape);
                 }
             }
         }
@@ -116,8 +116,8 @@ public class tablero extends JPanel {
                 int x = cur_x + curr_pieza.x(i);
                 int y = cur_y - curr_pieza.y(i);
                 
-                drawSquare(g, x * squareWidth(),
-                        boardTop + (BOARD_HEIGHT - y - 1) * squareHeight(),
+                drawSquare(g, x * squareW(),
+                        boardTop + (BOARD_HEIGHT - y - 1) * squareH(),
                         curr_pieza.getShape());
             }
         }
@@ -322,29 +322,33 @@ public class tablero extends JPanel {
             status_bar.setText(String.valueOf(lnDrop * 10));
             isFallEnd = true;
             curr_pieza.setShape(temte.NShape);
+            if(lnDrop * 10 == theter.gameLimin){
+                timex.stop();
+                JOptionPane.showMessageDialog(null, "Has ganado");
+            }
         }
     }
     
     private void drawSquare(Graphics gx, int xx, int yy, temte shape) {
         
-        Color colores[] = {new Color(0, 0, 0), new Color(204, 102, 102),
-            new Color(102, 204, 102), new Color(102, 102, 204),
-            new Color(204, 204, 102), new Color(204, 102, 204),
-            new Color(102, 204, 204), new Color(218, 170, 0)
+        Color colores[] = {new Color(0, 0, 0), new Color(90, 112, 80),
+            new Color(200, 205, 50), new Color(200, 50, 204),
+            new Color(30, 30, 102), new Color(49, 102, 204),
+            new Color(99, 99, 204), new Color(99, 170, 5)
         };
         
         var colorix = colores[shape.ordinal()];
         
         gx.setColor(colorix);
-        gx.fillRect(xx + 1, yy + 1, squareWidth() - 2, squareHeight() - 2);
+        gx.fillRect(xx + 1, yy + 1, squareW() - 2, squareH() - 2);
         
         gx.setColor(colorix.brighter());
-        gx.drawLine(xx, yy + squareHeight() - 1, xx, yy);
-        gx.drawLine(xx, yy, xx + squareWidth() - 1, yy);
+        gx.drawLine(xx, yy + squareH() - 1, xx, yy);
+        gx.drawLine(xx, yy, xx + squareW() - 1, yy);
         
         gx.setColor(colorix.darker());
-        gx.drawLine(xx + 1, yy + squareHeight() - 1, xx + squareWidth() - 1, yy + squareHeight() - 1);
-        gx.drawLine(xx + squareWidth() - 1, yy + squareHeight() - 1, xx + squareWidth() - 1, yy + 1);
+        gx.drawLine(xx + 1, yy + squareH() - 1, xx + squareW() - 1, yy + squareH() - 1);
+        gx.drawLine(xx + squareW() - 1, yy + squareH() - 1, xx + squareW() - 1, yy + 1);
     }
     
     class GameCycle implements ActionListener {

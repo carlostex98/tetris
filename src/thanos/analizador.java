@@ -54,10 +54,10 @@ public class analizador {
         gram_niveles();
         analizaPiezas(b);
         gramarPiezas();
-        print_all();
+        /*print_all();
         
         System.out.println("<------------------->");
-        theter.gameList.printps();
+        theter.gameList.printps();*/
     }
 
     public void analizaTablero(String data) {
@@ -168,6 +168,7 @@ public class analizador {
             c = data.charAt(i);
             if (elementos.contains(Character.toString(c))) {
                 //ok
+                a_token("Numero", Character.toString(c), ln, cl);
                 piezas.add(Character.toString(c));
             } else if (c == '\n' || c == '\t' || c == ' ') {
                 ln++;

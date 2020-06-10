@@ -5,6 +5,8 @@
  */
 package thanos;
 
+import java.awt.EventQueue;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,24 +27,29 @@ public class gameMenu extends javax.swing.JFrame {
         //data de tokens
         Object[] cc = new Object[5];
         for (String[] token : theter.analiza.tokens) {
-            cc=token;
+            cc = token;
             DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
             model.addRow(cc);
         }
-        
+
         Object[] cx = new Object[5];
         for (String[] err : theter.analiza.errores) {
-            cx=err;
+            cx = err;
             DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
-            model.addRow(cc);
+            model.addRow(cx);
         }
-        
+
         Object[] tt = new Object[1];
         for (String[] gmg : theter.gameList.niveles) {
-            tt[0]=gmg[2];
+            tt[0] = gmg[2];
             DefaultTableModel model = (DefaultTableModel) tablaJuego.getModel();
-            model.addRow(cc);
+            model.addRow(tt);
         }
+        if(theter.analiza.errores.size()>=1){
+            //no habilita
+            
+        }
+        
     }
 
     /**
@@ -140,6 +147,11 @@ public class gameMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaJuego.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaJuegoMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tablaJuego);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -187,6 +199,24 @@ public class gameMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tablaJuegoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaJuegoMouseClicked
+        //seleccionamos
+        if(theter.analiza.errores.size()>=1){
+            //no habilita
+            JOptionPane.showMessageDialog(null, "No puedes jugar porque los archivos de entrada tienen errores.");
+        }
+        DefaultTableModel model = (DefaultTableModel) tablaJuego.getModel();
+        int s = tablaJuego.getSelectedRow();
+        //con el coso seleccionado
+        theter.y_dim = Integer.parseInt(theter.gameList.niveles.get(s)[0]);
+        theter.x_dim = Integer.parseInt(theter.gameList.niveles.get(s)[1]);
+        //ahora el bendito juego
+        EventQueue.invokeLater(() -> {
+            var super_super_game = new tete();
+            super_super_game.setVisible(true);
+        });
+    }//GEN-LAST:event_tablaJuegoMouseClicked
 
     /**
      * @param args the command line arguments

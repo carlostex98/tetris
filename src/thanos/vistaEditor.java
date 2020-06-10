@@ -1,6 +1,15 @@
 package thanos;
 
 import java.awt.EventQueue;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.System.Logger;
+import java.util.logging.Level;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 public class vistaEditor extends javax.swing.JFrame {
 
@@ -43,10 +52,20 @@ public class vistaEditor extends javax.swing.JFrame {
         jLabel3.setText("Archivo de piezas");
 
         jButton1.setText("Abrir archivo niveles");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Abrir archivo piezas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Compilar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -112,17 +131,75 @@ public class vistaEditor extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        theter.analiza.startAnalisis(f1.getText()+" ", f2.getText()+" ");
+        theter.analiza.startAnalisis(f1.getText() + " ", f2.getText() + " ");
         //this.setVisible(false);
-        //gameMenu n= new gameMenu();
-        //n.setVisible(true);
-        
+        gameMenu n = new gameMenu();
+        n.setVisible(true);
+
         /*EventQueue.invokeLater(() -> {
             var super_super_game = new tete();
             super_super_game.setVisible(true);
         });*/
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        int seleccion = fileChooser.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            BufferedReader br = null;
+            try {
+                File fichero = fileChooser.getSelectedFile();
+                br = new BufferedReader(new FileReader(fichero));
+                String st;
+                String em = "";
+                while ((st = br.readLine()) != null) {
+                    em += st + "\n";
+                }
+                f1.setText(em);
+            } catch (FileNotFoundException ex) {
+                java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        int seleccion = fileChooser.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            BufferedReader br = null;
+            try {
+                File fichero = fileChooser.getSelectedFile();
+                br = new BufferedReader(new FileReader(fichero));
+                String st;
+                String em = "";
+                while ((st = br.readLine()) != null) {
+                    em += st + "\n";
+                }
+                f2.setText(em);
+            } catch (FileNotFoundException ex) {
+                java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    br.close();
+                } catch (IOException ex) {
+                    java.util.logging.Logger.getLogger(vistaEditor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
