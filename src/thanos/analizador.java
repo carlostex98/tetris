@@ -6,7 +6,7 @@ public class analizador {
 
     LinkedList<String[]> tokens = new LinkedList<>();
     LinkedList<String[]> errores = new LinkedList<>();
-
+    LinkedList<String[]> aux = new LinkedList<>();
     LinkedList<String> piezas = new LinkedList<>();
 
     private void print_all() {
@@ -28,6 +28,11 @@ public class analizador {
     public void a_token(String tipo, String contenido, int linea, int columna) {
         String[] s = {Integer.toString(tokens.size()), tipo, contenido, Integer.toString(linea), Integer.toString(columna)};
         tokens.add(s);
+        if (contenido.equals("-")) {
+            aux.add(s);
+        } else if (tipo.equals("Numero") || tipo.equals("Indentificador")) {
+            aux.add(s);
+        }
     }
 
     public void a_error(String contenido, int linea, int columna) {
@@ -38,13 +43,21 @@ public class analizador {
     public void reset_list() {
         tokens.clear();
         errores.clear();
+        aux.clear();
+        piezas.clear();
+        theter.gameList.cl_all();
     }
 
     public void startAnalisis(String a, String b) {
         reset_list();
         analizaTablero(a);
+        gram_niveles();
         analizaPiezas(b);
+        gramarPiezas();
         print_all();
+        
+        System.out.println("<------------------->");
+        theter.gameList.printps();
     }
 
     public void analizaTablero(String data) {
@@ -183,6 +196,7 @@ public class analizador {
                         a = pieza;
                     } else {
                         //error
+                        
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
                     }
                     break;
@@ -192,17 +206,78 @@ public class analizador {
                         b = pieza;
                     } else {
                         //error
+                        
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
                     }
                     break;
                 case 2:
-                    if (letra.contains(orientacion)) {
+                    if (orientacion.contains(pieza)) {
                         e = 0;
                         c = pieza;
                         theter.gameList.a_pice(a, c);
                     } else {
                         //error
+                        
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
+                    }
+                    break;
+            }
+        }
+    }
+
+    public void gram_niveles() {
+        int e = 0;
+        String a, b, c;
+        a = "";
+        b = "";
+        c = "";
+        for (String[] token : aux) {
+            switch (e) {
+                case 0:
+                    //solo esperemos el numero de niveles
+                    if (token[1].equals("Numero")) {
+                        e = 1;
+                    } else {
+                        //error
+                        System.out.println("a");
+                    }
+                    break;
+                case 1:
+                    if (token[1].equals("Numero")) {
+                        a=token[2];
+                        e = 2;
+                    } else {
+                        //error
+                        System.out.println("b");
+                    }
+                    break;
+
+                case 2:
+                    if (token[2].equals("-")) {
+                        e = 3;
+                    } else {
+                        //error
+                        System.out.println("c");
+                    }
+                    break;
+                case 3:
+                    if (token[1].equals("Numero")) {
+                        e = 4;
+                        b=token[2];
+                    } else {
+                        //error
+                        System.out.println("d");
+                    }
+                    break;
+                case 4:
+                    if (token[1].equals("Indentificador")) {
+                        e = 1;
+                        c=token[2];
+                        //super add
+                    
+                        theter.gameList.a_level(a, b, c);
+                    } else {
+                        //error
                     }
                     break;
             }

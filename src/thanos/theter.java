@@ -4,15 +4,13 @@ public class theter {
 
     public static analizador analiza = new analizador();
     public static listas gameList = new listas();
-    
-    
+    public static int x_dim = 0;
+    public static int y_dim = 0;
+
     public static void main(String[] args) {
-          
-        vistaEditor n= new vistaEditor();
+        x_dim=12;
+        y_dim=22;
+        vistaEditor n = new vistaEditor();
         n.setVisible(true);
-        gameList.a_pice("I", ">");
-        gameList.a_pice("I", "v");
-        gameList.a_pice("O", ">");
-        gameList.a_pice("S", ">");
     }
 }

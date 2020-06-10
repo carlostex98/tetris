@@ -117,12 +117,29 @@ public class listas {
     }
 
     public void a_pice(String a, String b) {
-        String[] lev = {a, b};//lins, cols, nombre
+        String[] lev = {a, b};//letter, orientation
         pice.add(lev);
     }
 
     public void cl_all() {
-        niveles = null;
+        niveles.clear();
+        pice.clear();
+    }
+    
+    public void printps(){
+        for (String[] token : niveles) {
+            for (String token1 : token) {
+                System.out.print(token1 + "  ");
+            }
+            System.out.print("\n");
+        }
+        System.out.println("------------------");
+        for (String[] err : pice) {
+            for (String token1 : err) {
+                System.out.print(token1 + "  ");
+            }
+            System.out.print("\n");
+        }
     }
 
 }

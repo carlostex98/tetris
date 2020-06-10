@@ -112,15 +112,15 @@ public class vistaEditor extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        //theter.analiza.startAnalisis(f1.getText()+" ", f2.getText()+" ");
+        theter.analiza.startAnalisis(f1.getText()+" ", f2.getText()+" ");
         //this.setVisible(false);
         //gameMenu n= new gameMenu();
         //n.setVisible(true);
         
-        EventQueue.invokeLater(() -> {
+        /*EventQueue.invokeLater(() -> {
             var super_super_game = new tete();
             super_super_game.setVisible(true);
-        });
+        });*/
 
     }//GEN-LAST:event_jButton3ActionPerformed
 

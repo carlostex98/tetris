@@ -39,7 +39,7 @@ public class gameMenu extends javax.swing.JFrame {
         
         Object[] tt = new Object[1];
         for (String[] gmg : theter.gameList.niveles) {
-            tt[0]=gmg[0];
+            tt[0]=gmg[2];
             DefaultTableModel model = (DefaultTableModel) tablaJuego.getModel();
             model.addRow(cc);
         }
