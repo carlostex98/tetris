@@ -5,6 +5,8 @@
  */
 package thanos;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Carlos
@@ -16,6 +18,31 @@ public class gameMenu extends javax.swing.JFrame {
      */
     public gameMenu() {
         initComponents();
+        cargaData();
+    }
+
+    public void cargaData() {
+        //data de tokens
+        Object[] cc = new Object[5];
+        for (String[] token : theter.analiza.tokens) {
+            cc=token;
+            DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
+            model.addRow(cc);
+        }
+        
+        Object[] cx = new Object[5];
+        for (String[] err : theter.analiza.errores) {
+            cx=err;
+            DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
+            model.addRow(cc);
+        }
+        
+        Object[] tt = new Object[1];
+        for (String[] gmg : theter.gameList.niveles) {
+            tt[0]=gmg[0];
+            DefaultTableModel model = (DefaultTableModel) tablaJuego.getModel();
+            model.addRow(cc);
+        }
     }
 
     /**
@@ -32,13 +59,13 @@ public class gameMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabla2 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tablaJuego = new javax.swing.JTable();
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -57,7 +84,7 @@ public class gameMenu extends javax.swing.JFrame {
 
         jLabel1.setText("Tablas de analisis");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -73,9 +100,9 @@ public class gameMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla1);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tabla2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -91,13 +118,13 @@ public class gameMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tabla2);
 
         jLabel2.setText("Tabla de tokens");
 
         jLabel3.setText("Tabla de errores");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tablaJuego.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -113,7 +140,7 @@ public class gameMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tablaJuego);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -205,9 +232,9 @@ public class gameMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
+    private javax.swing.JTable tabla1;
+    private javax.swing.JTable tabla2;
+    private javax.swing.JTable tablaJuego;
     // End of variables declaration//GEN-END:variables
 }

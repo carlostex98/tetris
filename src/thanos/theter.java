@@ -3,6 +3,7 @@ package thanos;
 public class theter {
 
     public static analizador analiza = new analizador();
+    public static listas gameList = new listas();
     
     public static void main(String[] args) {
           

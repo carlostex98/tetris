@@ -61,7 +61,7 @@ public class analizador {
 
         for (int i = 0; i < data.length(); i++) {
             c = data.charAt(i);
-            
+
             cl++;
             if (i < data.length() - 1) {
                 v = data.charAt(i + 1);
@@ -99,7 +99,7 @@ public class analizador {
                         //jump
                         caso = 0;
                         a_token("Comentario", f, ln, cl);
-                        
+
                     } else {
                         f += c;
                     }
@@ -171,12 +171,16 @@ public class analizador {
         //(letra coma orientacion)+
         String letra = "IJLOSZT";
         String orientacion = "v^<>";
+        String a="";
+        String b="";
+        String c="";
         int e = 0;
         for (String pieza : piezas) {
             switch (e) {
                 case 0:
                     if (letra.contains(pieza)) {
                         e = 1;
+                        a=pieza;
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
@@ -185,6 +189,7 @@ public class analizador {
                 case 1:
                     if (pieza.equals(",")) {
                         e = 2;
+                        b=pieza;
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
@@ -193,6 +198,8 @@ public class analizador {
                 case 2:
                     if (letra.contains(orientacion)) {
                         e = 0;
+                        c=pieza;
+                        theter.gameList.a_level(a, b, c);
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
