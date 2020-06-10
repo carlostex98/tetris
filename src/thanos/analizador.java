@@ -171,16 +171,16 @@ public class analizador {
         //(letra coma orientacion)+
         String letra = "IJLOSZT";
         String orientacion = "v^<>";
-        String a="";
-        String b="";
-        String c="";
+        String a = "";
+        String b = "";
+        String c = "";
         int e = 0;
         for (String pieza : piezas) {
             switch (e) {
                 case 0:
                     if (letra.contains(pieza)) {
                         e = 1;
-                        a=pieza;
+                        a = pieza;
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
@@ -189,7 +189,7 @@ public class analizador {
                 case 1:
                     if (pieza.equals(",")) {
                         e = 2;
-                        b=pieza;
+                        b = pieza;
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);
@@ -198,8 +198,8 @@ public class analizador {
                 case 2:
                     if (letra.contains(orientacion)) {
                         e = 0;
-                        c=pieza;
-                        theter.gameList.a_level(a, b, c);
+                        c = pieza;
+                        theter.gameList.a_pice(a, c);
                     } else {
                         //error
                         a_error("Elemento sintactico desconocido " + pieza, 0, 0);

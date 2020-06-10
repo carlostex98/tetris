@@ -175,8 +175,79 @@ public class tablero extends JPanel {
     private void newPiece() {
 
         curr_pieza.setRandomShape();
+        //aca movemos la chingadera
         cur_x = BOARD_WIDTH / 2 + 1;
         cur_y = BOARD_HEIGHT - 1 + curr_pieza.minY();
+        
+        int x = theter.gameList.ret_index();
+        theter.gameList.adx();
+        switch(x){
+            case 1:
+                //natural shape
+                break;
+            case 2:
+                Move(curr_pieza.rotateR(), cur_x, cur_y);
+                break;
+            case 3:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;
+            case 4:
+                //natshape
+                break;
+            case 5:
+                Move(curr_pieza.rotateR(), cur_x, cur_y);
+                break;
+            case 6:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;
+            case 7:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;
+            case 8:
+                //natshape
+                break;
+            case 9:
+                Move(curr_pieza.rotateR(), cur_x, cur_y);
+                break;
+            case 10:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;
+            case 11:
+                //nada
+                break;
+            case 12:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                //nada
+                break;
+            case 13:
+                //nada
+                break;
+            case 14:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                //nada
+                break;
+            case 15:
+                //nada
+                break;
+            case 16:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;
+            case 17:
+                //nada
+                break;
+            case 18:
+                Move(curr_pieza.rotateR(), cur_x, cur_y);
+                //nada
+                break;
+            case 19:
+                Move(curr_pieza.rotateL(), cur_x, cur_y);
+                break;       
+        }
+
+        
 
         if (!Move(curr_pieza, cur_x, cur_y)) {
 
