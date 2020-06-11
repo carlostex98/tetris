@@ -111,6 +111,11 @@ public class gameMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabla1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla1);
 
         tabla2.setModel(new javax.swing.table.DefaultTableModel(
@@ -127,6 +132,11 @@ public class gameMenu extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabla2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla2MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tabla2);
@@ -249,6 +259,19 @@ public class gameMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         theter.gameLimin=Integer.parseInt(in1.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabla1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla1MouseClicked
+        DefaultTableModel model = (DefaultTableModel) tabla1.getModel();
+        int s = tabla1.getSelectedRow();
+        JOptionPane.showMessageDialog(null, theter.analiza.tokens.get(s)[2]);
+        
+    }//GEN-LAST:event_tabla1MouseClicked
+
+    private void tabla2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla2MouseClicked
+        DefaultTableModel model = (DefaultTableModel) tabla2.getModel();
+        int s = tabla2.getSelectedRow();
+        JOptionPane.showMessageDialog(null, theter.analiza.errores.get(s)[1]);
+    }//GEN-LAST:event_tabla2MouseClicked
 
     /**
      * @param args the command line arguments
