@@ -24,7 +24,19 @@ public class tete extends JFrame {
         tab_x.start_game();
 
         setTitle("Tetris");
-        setSize(theter.x_dim * 18, theter.y_dim * 18);
+        int x = 0;
+        int y = 0;
+        if (theter.x_dim * 18 >= 1250) {
+            x = 1250;
+        }else{
+            x=theter.x_dim * 18;
+        }
+        if (theter.y_dim * 18 >= 700) {
+            y = 700;
+        }else{
+            y=theter.y_dim * 18;
+        }
+        setSize(x, y);
         setDefaultCloseOperation(HIDE_ON_CLOSE);
         setLocationRelativeTo(null);
     }
